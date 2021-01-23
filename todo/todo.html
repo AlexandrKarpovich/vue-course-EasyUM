@@ -11,12 +11,20 @@
     <script src="./components/item-add-form.js"></script>
 </head>
 <body>
-
-<div id="app">
-    <app-header name="Todo App"></app-header>
-    <todo-list :todos="todos" @></todo-list>
-    <item-add-form @on-add-item="onAddItem"></item-add-form>
     
+
+<div id="app" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-center">
+            <app-header name="Todo App" class="modal-title"></app-header>
+        </div>
+        <div class="modal-body">
+            <todo-list :todos="todos" @on-delete-item="onDeleteItem"></todo-list>
+        </div>
+        <div class="modal-footer">
+            <item-add-form @on-add-item="onAddItem"></item-add-form>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -25,20 +33,25 @@
             label: '',
             maxId: 3,
             todos: [
-                { id: 1, label: 'Купить молока', done: true},
-                { id: 2, label: 'Помыть полы', done: false},
-                { id: 3, label: 'Решить задачу', done: false}
+                { id: 1, label: 'Купить молока', done: true, important: false},
+                { id: 2, label: 'Помыть полы', done: false, important: true},
+                { id: 3, label: 'Решить задачу', done: false, important: false}
             ]
         },
         methods: {
             onAddItem: function (label) {
-        
                 const newTodo = {
                     id: ++this.maxId,
                     label: label,
                     done: false
                 }
                 this.todos.push(newTodo);
+            },
+            onDeleteItem: function (item) {
+                const index = this.todos.findIndex( function (todo) {
+                    return todo.id = item.id;
+                });
+                this.todos.splice(index, 1);
             }
         },
         el: '#app'

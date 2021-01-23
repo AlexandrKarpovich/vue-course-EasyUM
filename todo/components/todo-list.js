@@ -1,20 +1,16 @@
 Vue.component('todo-list', {
     template: `
-        <ul>
-            <li v-for="item in todos" >
+        <ul class="list-group">
+            <li v-for="item in todos" class="list-group-item d-flex justify-content-between align-items-center">
                 {{ item.label }} 
-                    <button type="buttton" @click="onDeleteItem(item)">Del</button>
-                </li>
+                <button class="btn btn-outline-danger"type="buttton" @click="onDeleteItem(item)">Del</button>
+            </li>
         </ul>
     `,
     props: [ 'todos' ],
     methods: {
-        onAddItem: 
         onDeleteItem: function (item) {
-            this.todos.findIndex( function (todo) {
-                return todo.id = item.id;
-            });
-            this.todos.splice(index. 1);
+            this.$emit('on-delete-item', item);
         }
     },
 });
