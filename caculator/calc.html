@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <button v-for="num in numbers" type="button" class="calc-btn" @click="onDigit(num)">{{ num }}</button>
+            <button v-for="op in ops" type="button" class="op-btn" @click="onOperation(op)">{{ op }}</button>
+            <button type="button" class="equal-btn" @click="onEqual">=</button>
+            <button class="del-btn" @click="onDel">del</button>
+        </div>
+        <label>
+            Результат:
+            <input class="result" v-model="expr" />
+        </label>
+        <div class="error" v-if="error">
+            {{ error }}
+        </div>
+    </div>
+    <script>
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+                ops: ['+', '-', '*'],
+                expr: '',
+                error: '',
+            },
+            methods: {
+                onDigit: function (number) {
+                    this.expr += number;
+                },
+                onOperation: function (op) {
+                    this.expr += op;
+                },
+                onEqual: function () {
+                    try {
+                        this.expr = eval(this.expr);
+                        this.error = '';
+
+                    } catch(err) {
+                        this.error = 'Введите корректное выражение';
+                    }
+                },
+                onDel: function () {
+                    const exprArr = this.expr.split('');
+                    exprArr.split('').filter(function(item)  {
+                        return item.trim();
+                    });
+                    exprArr.splice(-1,1);
+                    this.expr = exprArr.join('');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./components/app-header.js"></script>
+    <script src="./components/todo-list.js"></script>
+    <script src="./components/item-add-form.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <app-header name="Todo App"></app-header>
+    <todo-list :todos="todos" @></todo-list>
+    <item-add-form @on-add-item="onAddItem"></item-add-form>
+    
+</div>
+
+<script>
+    const config = {
+        data: {
+            label: '',
+            maxId: 3,
+            todos: [
+                { id: 1, label: 'Купить молока', done: true},
+                { id: 2, label: 'Помыть полы', done: false},
+                { id: 3, label: 'Решить задачу', done: false}
+            ]
+        },
+        methods: {
+            onAddItem: function (label) {
+        
+                const newTodo = {
+                    id: ++this.maxId,
+                    label: label,
+                    done: false
+                }
+                this.todos.push(newTodo);
+            }
+        },
+        el: '#app'
+    }
+    const app = new Vue(config);
+</script>
+</body>
+</html>

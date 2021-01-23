@@ -1,0 +1,14 @@
+
+.container {
+    width: 400px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    margin-bottom: 10px;
+}
+
+.error {
+    border: 1px solid red;
+    color: red;
+    padding: 20px;
+}
